@@ -21,7 +21,7 @@ export default function Home() {
       const formData = new FormData();
       formData.append("email", email);
 
-      const res = await fetch("YOUR_LATEST_SCRIPT_URL", {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbxVfK5gxaGf1cc1hWTez72r_VObfy1fY3NWzAloFK5vUNqXL5aTHF1MBDnsqcl84aAK/exec", {
         method: "POST",
         body: formData,
       });
@@ -36,6 +36,7 @@ export default function Home() {
       setMessage("Something went wrong. Please try again.");
     }
   };
+
 
 
 
