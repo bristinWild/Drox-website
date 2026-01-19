@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --drox-sky: 186 230 253;
+    --drox-blue: 56 189 248;
+    --drox-orange: 251 146 60;
+    --drox-peach: 254 215 170;
+    --drox-burgundy: 136 19 55;
+  }
+
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
