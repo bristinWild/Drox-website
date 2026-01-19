@@ -10,20 +10,34 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
+    setStatus("loading");
 
-    // Simulate API call - replace with your actual API endpoint
-    setTimeout(() => {
-      if (email && email.includes('@')) {
-        setStatus('success');
-        setMessage('🎉 Welcome aboard! Check your email for confirmation.');
-        setEmail('');
-      } else {
-        setStatus('error');
-        setMessage('Please enter a valid email address.');
+    try {
+      if (!email.includes("@")) {
+        setStatus("error");
+        setMessage("Please enter a valid email");
+        return;
       }
-    }, 1500);
+      const formData = new FormData();
+      formData.append("email", email);
+
+      const res = await fetch("YOUR_LATEST_SCRIPT_URL", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setStatus("success");
+      setMessage("🎉 You're on the waitlist!");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
+    }
   };
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-200 via-sky-100 to-orange-50 relative overflow-hidden">
@@ -70,28 +84,29 @@ export default function Home() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 container mx-auto px-6 py-20 flex flex-col items-center justify-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-6 pt-24 flex flex-col items-center min-h-screen">
         {/* Logo/Brand */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-12"
+          className="mb-6"
         >
           <div className="relative">
             <motion.div
-              className="absolute -inset-28 bg-gradient-to-br from-orange-300 to-sky-300 rounded-full blur-3xl opacity-40"
+              className="absolute -inset-20 bg-gradient-to-br from-orange-300 to-sky-300 rounded-full blur-3xl opacity-40"
               animate={{ scale: [1.1, 1.35, 1.1] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
-
-            <motion.img
-              src="/text-logo-bg.png"
-              alt="Drox Logo"
-              className="relative w-[50rem] h-auto drop-shadow-2xl"
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <div className="relative overflow-hidden h-[200px] sm:h-[260px] lg:h-[320px]">
+              <motion.img
+                src="/text-logo-bg.png"
+                alt="Drox Logo"
+                className="relative w-[90vw] sm:w-[40rem] lg:w-[50rem] h-auto -mt-24 sm:-mt-32 lg:-mt-44  "
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
           </div>
         </motion.div>`
 
@@ -100,9 +115,9 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center max-w-4xl mb-12"
+          className="text-center max-w-4xl mb-12 "
         >
-          <h2 className="text-5xl md:text-7xl font-black text-rose-900 mb-6 leading-tight "
+          <h2 className="text-5xl md:text-7xl font-black text-rose-900 mb-10 leading-tight "
             style={{ letterSpacing: -0.2 }}>
 
             Discover experiences
@@ -127,10 +142,12 @@ export default function Home() {
           className="w-full max-w-md"
         >
           <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border-4 border-white">
-            <h3 className="text-2xl font-bold text-rose-900 mb-2 text-center">
+            <h3 className="text-2xl font-bold text-rose-900 mb-2 text-center"
+              style={{ fontFamily: "Marker Felt" }}>
               Join the Waitlist
             </h3>
-            <p className="text-slate-600 mb-6 text-center">
+            <p className="text-slate-600 mb-6 text-center"
+              style={{ letterSpacing: -0.2, fontStyle: 'italic' }}>
               Be the first to explore with Drox
             </p>
 
@@ -178,7 +195,7 @@ export default function Home() {
                     Joining...
                   </span>
                 ) : (
-                  'GET STARTED'
+                  'Join'
                 )}
               </motion.button>
             </form>
@@ -234,7 +251,7 @@ export default function Home() {
           className="mt-20 text-center text-slate-600"
         >
           <p className="text-sm">
-            © 2024 Drox. Coming soon to your adventures.
+            © 2026 Drox. Coming soon to your adventures.
           </p>
         </motion.footer>
       </div>
